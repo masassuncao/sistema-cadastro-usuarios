@@ -1,0 +1,27 @@
+{
+  "name": "sistema-cadastro-usuarios",
+  "description": "API RESTful para a realização das operações de CRUD (Create, Read, Update e Delete) em uma base de dados de usuários, utilizando Node.js, Express e Knex.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/masassuncao/sistema-cadastro-usuarios",
+  "main": "server.js",
+  "scripts": {
+    "start": "./scripts/appStartUp.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marco Assunção",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^2.5.1",
+    "pg": "^8.11.3",
+    "sqlite3": "^5.1.6",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
