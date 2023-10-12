@@ -23,8 +23,14 @@ rotasV1.get('/', function(req, res){
 
 //Rotas de usuários
 rotasV1.post('/usuarios/', controladoraUsuarios.incluirUsuario)
-rotasV1.post('/administradores/', checkToken, isAdmin, controladoraUsuarios.incluirAdministrador)
-rotasV1.delete('/usuarios/', checkToken, isAdmin, controladoraUsuarios.excluirUsuario)
+rotasV1.get('/usuarios/:id', checkToken, controladoraUsuarios.obterUsuarioEspecifico)
+rotasV1.put('/usuarios/:id', checkToken, controladoraUsuarios.alterarUsuario)
+rotasV1.delete('/usuarios/:id', checkToken, controladoraUsuarios.excluirUsuario)
+
+
+//Rotas de administradores
+//rotasV1.post('/administradores/', checkToken, isAdmin, controladoraUsuarios.incluirAdministrador)
+
 
 rotasV1.use(
     (req, res) => {

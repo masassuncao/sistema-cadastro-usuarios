@@ -16,15 +16,17 @@ function efetuarLoginUsuario(req, res) {
                     if (err)
                         res.status(500).json({mensagem: `Erro ao comparar senhas: ${err.message}`})
                     else if (result) {
+                        var id_usuario = usuario.id
+                        var usuarioSecretKey = obtemSecretKey(id_usuario)
                         jwt.sign(
-                            {id: usuario.id, papel: usuario.papel}, 
-                            process.env.SECRET_KEY,
+                            {id: id_usuario, papel: usuario.papel}, 
+                            usuarioSecretKey,
                             {algorithm: "HS256", expiresIn: "1h"},
                             (err, token) => {
                                 if (err)
                                     res.status(500).json({mensagem: `Erro ao gerar token: ${err.message}`})
                                 else
-                                    res.status(200).json({token: token})
+                                    res.status(200).json({id: id_usuario, token: token})
                             }
                         )
                     }
@@ -37,6 +39,11 @@ function efetuarLoginUsuario(req, res) {
 
 }
 
+function obtemSecretKey(id) {
+    return process.env.SECRET_KEY.concat(id)
+}
+
 module.exports = {
-    efetuarLoginUsuario
+    efetuarLoginUsuario,
+    obtemSecretKey
 }

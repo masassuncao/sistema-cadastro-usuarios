@@ -25,12 +25,14 @@ rotasSeg.use(
 
 rotasSeg.checkToken = (req, res, next) => {
     const autHeader = req.headers['authorization']
+    const id_usuario = req.headers['user-id']
     const token = autHeader && autHeader.split(' ')[1]
 
     if (!token)
         res.status(401).json({mensagem: `Token não informado!`})
     else {
-        jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+        let secret = controladoraSeg.obtemSecretKey(id_usuario)
+        jwt.verify(token, secret, (err, decoded) => {
             if (err)
                 res.status(401).json({mensagem: `Token inválido!`})
             else
