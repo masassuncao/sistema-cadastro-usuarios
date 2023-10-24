@@ -4,6 +4,9 @@ const repositorioUsuarios = require('../repositories/repositorioUsuarios')
 // Importa o módulo modelo de usuario
 const modelosUsuario = require('../models/modelosUsuario')
 
+// Importa o módulo serviço de criação de carteiras
+const servicoCriacaoCarteiras = require('../services/servicoCriacaoCarteiras')
+
 function incluirUsuario(req, res) {
     try {
         const modelo = modelosUsuario.modeloUsuario
@@ -16,7 +19,9 @@ function incluirUsuario(req, res) {
 
         //Se o perfil estiver de acordo com a rota utilizada, faz a inclusão:
         repositorioUsuarios.incluirNovoUsuario(modelo.parse(dadosUsuarioInserir))
-        .then(usuarios => {
+        .then((usuario) => {
+            console.log('Usuário inserido: ' + usuario[0].id)
+            servicoCriacaoCarteiras.criarCarteira(usuario[0].id)
             return res.status(200).json({status: "OK", mensagem: "Usuário inserido com sucesso!"})
         })
         .catch(err => {

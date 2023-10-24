@@ -6,11 +6,12 @@ const { v4: uuidv4 } = require('uuid');
 function incluirNovoUsuario(novoUsuario) {
         novoUsuario.id = uuidv4();
         novoUsuario.senha = bcrypt.hashSync(novoUsuario.senha, 8)
-        return knex('usuarios').insert({...novoUsuario})
+        return knex('usuarios')
+                .insert({...novoUsuario})
+                .returning('id')
 }
 
 function buscarUsuarioPorId(id) {
-        console.log("Id usuário buscado: " + id)
         return knex('usuarios')
                 .where({id: id})
 }
