@@ -16,7 +16,6 @@ A API apresenta a seguinte estrutura:
 | Realizar login na aplicação                | N/A                | **POST**   /login                 |
 
 <!--
-
 ### Administradores
 | Ação                                   	   |  Operação (CRUD) 	| Mapeamento da URL        	      |
 |--------------------------------------------|--------------------|-----------------------------------|
@@ -60,7 +59,7 @@ Por padrão, a aplicação é inicializada com dois usuários no banco de dados 
 
 ## *Usuários*
 
-**Criar**: Um usuário pode fazer o seu cadastro na aplicação, enviando uma requisição **POST** para a rota ***"/api/v1/usuarios"***. Deverão ser enviadas as seguintes informações no body da requisição em um objeto json:
+**Criar**: Um usuário pode fazer o seu cadastro na aplicação, enviando uma requisição **POST** para a rota ***"/api/v1/usuarios"***. Ao criar um novo usuário, um evento é produzido para uma fila MQ. A mensagem enviada para a fila contém o id do novo usuário. Na criação, deverão ser enviadas as seguintes informações no body da requisição em um objeto json:
 
 ```
  {
@@ -77,7 +76,7 @@ Por padrão, a aplicação é inicializada com dois usuários no banco de dados 
 
 **Alterar**: Para alterar dados de um usuário, deverá ser enviada uma requisição **PUT** para a rota ***"/api/v1/usuarios/:id"***. O body da requisição deverá conter um objeto json no mesmo formato utilizado na criação de um usuário (indicado acima). O header da requisição deverá conter um token válido para o usuário, bem como seu id (que deverá ser enviado sob a tag "user-id"). **Usuários com papel USER somente estarão autorizados a alterar dados do seu própro usuário**.
 
-**Excluir**: Para excluir um usuário, deverá ser enviada uma requisição **DELETE** para a rota ***"/api/v1/usuarios/:id"***. O header da requisição deverá conter um token válido para o usuário, bem como seu id (que deverá ser enviado sob a tag "user-id"). **Usuários com papel USER somente estarão autorizados a excluir o seu própro usuário**.
+**Excluir**: Para excluir um usuário, deverá ser enviada uma requisição **DELETE** para a rota ***"/api/v1/usuarios/:id"***. O header da requisição deverá conter um token válido para o usuário, bem como seu id (que deverá ser enviado sob a tag "user-id"). Ao excluir um usuário, um evento é produzido para uma fila MQ. A mensagem enviada para a fila contém o id do usuário excluído. **Usuários com papel USER somente estarão autorizados a excluir o seu própro usuário**.
 
 
 
