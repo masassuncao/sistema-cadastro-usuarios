@@ -5,7 +5,7 @@ const repositorioUsuarios = require('../repositories/repositorioUsuarios')
 const modelosUsuario = require('../models/modelosUsuario')
 
 // Importa o módulo serviço de criação de carteiras
-const servicoCriacaoCarteiras = require('../services/servicoCriacaoCarteiras')
+const servicoCarteiras = require('../services/servicoCarteiras')
 
 function incluirUsuario(req, res) {
     try {
@@ -19,9 +19,9 @@ function incluirUsuario(req, res) {
 
         //Se o perfil estiver de acordo com a rota utilizada, faz a inclusão:
         repositorioUsuarios.incluirNovoUsuario(modelo.parse(dadosUsuarioInserir))
-        .then((usuario) => {
-            console.log('Usuário inserido: ' + usuario[0].id)
-            servicoCriacaoCarteiras.criarCarteira(usuario[0].id)
+        .then((usuarios) => {
+            console.log('Usuário inserido: ' + usuarios[0].id)
+            servicoCarteiras.criarCarteira(usuarios[0].id)
             return res.status(200).json({status: "OK", mensagem: "Usuário inserido com sucesso!"})
         })
         .catch(err => {
@@ -117,6 +117,7 @@ function excluirUsuario(req, res) {
         repositorioUsuarios.excluirUsuarioPorId(idUsuarioDeletar)
         .then(usuarios => {
             if (usuarios) {
+                servicoCarteiras.excluirCarteira(idUsuarioDeletar)
                 return res.status(200).json({status: "OK", mensagem: "Usuário excluído com sucesso!"})
             } else {
                 return res.status(404).json({status: "NOK", mensagem: "Usuário não cadastrado."})        
