@@ -1,5 +1,5 @@
-# API RESTful
-Esta é uma API RESTful para a realização das operações de CRUD (Create, Read, Update e Delete) em uma base de usuários.
+# API REST
+Esta é uma API REST para a realização das operações de CRUD (Create, Read, Update e Delete) em uma base de usuários.
 
 ## *Funcionalidades*
 A API apresenta a seguinte estrutura:
